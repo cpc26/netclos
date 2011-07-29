@@ -1,0 +1,22 @@
+#!/bin/sh
+echo $5
+echo $6
+DISPLAY=$3
+
+if [ ! -d $4 ]; then 
+    mkdir $4
+fi
+
+if [ "x$1" == "xemacs"]; then 
+    echo "(remote-nc "  >$4/tmp$5.el
+    echo -n \"  >>$4/tmp$5.el
+    echo -n $2  >>$4/tmp$5.el
+    echo -n \"  >>$4/tmp$5.el
+    echo -n " '" >>$4/tmp$5.el
+    cat $4/tmp$6.lisp >>$4/tmp$5.el
+    echo \) >>$4/tmp$5.el
+    emacs  -l $4/tmp$5.el
+else
+    echo $2
+    $2 -e `cat $4/tmp$6.lisp` >/dev/null
+fi
